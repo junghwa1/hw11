@@ -2,42 +2,42 @@
 #include <stdlib.h>
 #define VERTEX_SIZE 10
 
-typedef struct Node{    //ì •ì  êµ¬ì¡°ì²´
+typedef struct Node{    //Á¤Á¡ ±¸Á¶Ã¼
     struct Node* link;
     int key;
 }graphnode;
 
-typedef struct graph_p{ //ì •ì ì˜ ê°œìˆ˜ì™€ ì •ì ì„ ì €ìž¥í•  ìˆ˜ ìžˆëŠ” ë°°ì—´ì„ ê°€ì§„ êµ¬ì¡°ì²´
+typedef struct graph_p{ //Á¤Á¡ÀÇ °³¼ö¿Í Á¤Á¡À» ÀúÀåÇÒ ¼ö ÀÖ´Â ¹è¿­À» °¡Áø ±¸Á¶Ã¼
     int n;
     struct Node* headnode_ptr[VERTEX_SIZE];
 }graph;
 
 
 
-int visitedNode[VERTEX_SIZE];   //ì •ì ì„ ë°©ë¬¸ í–ˆëŠ”ì§€ ê¸°ë¡í•˜ëŠ” ë°°ì—´
-int non_visited[VERTEX_SIZE];   //ë°©ë¬¸í•˜ì§€ ì•Šì€ ì •ì ì„ ì €ìž¥ í•˜ëŠ” ë°°ì—´
-int stacknode[VERTEX_SIZE];     //ìŠ¤íƒ ë°°ì—´
-int queuenode[VERTEX_SIZE];     //í ë°°ì—´
+int visitedNode[VERTEX_SIZE];   //Á¤Á¡À» ¹æ¹® Çß´ÂÁö ±â·ÏÇÏ´Â ¹è¿­
+int non_visited[VERTEX_SIZE];   //¹æ¹®ÇÏÁö ¾ÊÀº Á¤Á¡À» ÀúÀå ÇÏ´Â ¹è¿­
+int stacknode[VERTEX_SIZE];     //½ºÅÃ ¹è¿­
+int queuenode[VERTEX_SIZE];     //Å¥ ¹è¿­
 int top=-1;
 int rear=-1;
 int front=-1;
 
-void Initialize_Graph(graph** g);
-void Insert_Vertex(graph* g);
-void Insert_Edge(graph* g, int key1, int key2);
-void Depth_First_Search(graph* g,int key);
-void Breadth_First_Search(graph* g, int key);
-void Print_Graph(graph* g);
-void Freenode(graph* g);
-void reset_Visitedlist();
-void reset_non_visited();
-int isEmpty_S();
-int isEmpty_Q();
-void push(int key);
-int pop();
-void enqueue(int key);
-int dequeue();
-void sortqueue(int n);
+void Initialize_Graph(graph** g);   //±×·¡ÇÁ »ý¼º
+void Insert_Vertex(graph* g);       //Á¤Á¡ Ãß°¡
+void Insert_Edge(graph* g, int key1, int key2); //°£¼± Ãß°¡(¹æÇâ)
+void Depth_First_Search(graph* g,int key);  //±íÀÌ ¿ì¼± Å½»ö
+void Breadth_First_Search(graph* g, int key);   //³ÐÀÌ ¿ì¼± Å½»ö
+void Print_Graph(graph* g);     //±×·¡ÇÁÀÇ Á¤Á¡°ú °£¼±À» Ãâ·Â
+void Freenode(graph* g);        //ÇÒ´çµÈ ¸Þ¸ð¸® ÇØÁ¦
+void reset_Visitedlist();       //Á¤Á¡ ¹æ¹® ±â·Ï ¹è¿­ ÃÊ±âÈ­
+void reset_non_visited();       //¹æ¹®ÇÏÁö ¾ÊÀº Á¤Á¡ ±â·Ï ¹è¿­ ÃÊ±âÈ­
+int isEmpty_S();    //½ºÅÃÀÌ ºñ¾îÀÖ´ÂÁö È®ÀÎ
+int isEmpty_Q();    //Å¥°¡ ºñ¾îÀÖ´ÂÁö È®ÀÎ
+void push(int key); //½ºÅÃ¿¡ push
+int pop();  //½ºÅÃ¿¡¼­ pop
+void enqueue(int key);  //Å¥¿¡ enqueue
+int dequeue();     //Å¥¿¡¼­ dequeue
+void sortqueue(int n); //¹æ¹®ÇÏÁö ¾ÊÀº ÀÎÁ¢ Á¤Á¡À» ¿À¸§Â÷¼øÀ¸·Î Á¤·Ä
 
 int main(){
     char command;
@@ -46,9 +46,9 @@ int main(){
 
     graph* g=NULL;
 
-    printf("[----- [ì—¼ì¤‘í™”] [2019038062] -----]\n");
+    printf("[----- [¿°ÁßÈ­] [2019038062] -----]\n");
     do{
-        printf("----------------------------------------------------------------\n");
+        printf("----------------------------------------------------------------\n");   //¸Þ´º Ãâ·Â
         printf("                       Graph Searches\n");
         printf("----------------------------------------------------------------\n");
         printf("Initialize Graph = z\n");
@@ -58,104 +58,104 @@ int main(){
         printf("----------------------------------------------------------------\n");
         
         printf("Command = ");
-		scanf(" %c", &command);
+		scanf(" %c", &command); //¸Þ´º ¼±ÅÃ
 
         switch(command) {
 		case 'z': case 'Z':
-			Initialize_Graph(&g);
+			Initialize_Graph(&g);   //±×·¡ÇÁ »ý¼º
 			break;
 		case 'q': case 'Q':
-			Freenode(g);          //í• ë‹¹ëœ ë©”ëª¨ë¦¬ í•´ì œ,í”„ë¡œê·¸ëž¨ ì¢…ë£Œ
+			Freenode(g);          //ÇÒ´çµÈ ¸Þ¸ð¸® ÇØÁ¦,ÇÁ·Î±×·¥ Á¾·á
 			break;
 		case 'v': case 'V':
-			Insert_Vertex(g);
+			Insert_Vertex(g);       //Á¤Á¡ Ãß°¡
 			break;
 		case 'e': case 'E':
 			printf("Your Vertex_key1, Vertex_key2 = ");
             scanf(" %d %d", &vertex_key1, &vertex_key2);
-            Insert_Edge(g, vertex_key1, vertex_key2);
+            Insert_Edge(g, vertex_key1, vertex_key2);   //°£¼± Ãß°¡
 			break;
 		case 'd': case 'D':
             printf("Your Vertex_key = ");
             scanf(" %d", &key);
-            reset_Visitedlist();
-			Depth_First_Search(g,key);
+            reset_Visitedlist();        //¹æ¹®ÇÑ Á¤Á¡ ±â·Ï ¹è¿­ ÃÊ±âÈ­
+			Depth_First_Search(g,key);      //±íÀÌ ¿ì¼± Å½»ö
             printf("\n");
 			break;
         case 'b': case 'B':
             printf("your Vertex_key = ");
             scanf(" %d", &key);
-            reset_Visitedlist();
-            Breadth_First_Search(g,key);
+            reset_Visitedlist();        //¹æ¹®ÇÑ Á¤Á¡ ±â·Ï ¹è¿­ ÃÊ±âÈ­
+            Breadth_First_Search(g,key);    //³ÐÀÌ ¿ì¼± Å½»ö
             printf("\n");
             break;
         case 'p': case 'P':
-            Print_Graph(g);
+            Print_Graph(g);     //±×·¡ÇÁÀÇ Á¤Á¡°ú °£¼±À» Ãâ·Â
             break;
-		default:                //ë©”ë‰´ ì´ì™¸ì˜ ë‹¤ë¥¸ ê°’ ìž…ë ¥ ì‹œ ì—ëŸ¬ë¬¸êµ¬ ì¶œë ¥
+		default:                //¸Þ´º ÀÌ¿ÜÀÇ ´Ù¸¥ °ª ÀÔ·Â ½Ã ¿¡·¯¹®±¸ Ãâ·Â
 			printf("\n       >>>>>   Concentration!!   <<<<<     \n");
 			break;
 		}
 
 
-    }while(command != 'q' && command != 'Q');
+    }while(command != 'q' && command != 'Q');   //q³ª Q¸¦ ÀÔ·Â¹ÞÀ¸¸é ¹Ýº¹¹® Á¾·á
 
 
 }
 
 void Initialize_Graph(graph** g){
     
-    if(*g){
-        Freenode(*g);
+    if(*g){     //g°¡ NULLÀÌ ¾Æ´Ï¸é
+        Freenode(*g);   //ÇÒ´çµÈ ¸Þ¸ð¸® ÇØÁ¦
     }
-   *g=(graph*)malloc(sizeof(graph));
-   (*g)->n=-1;
+   *g=(graph*)malloc(sizeof(graph));    //µ¿Àû ¸Þ¸ð¸® ÇÒ´ç
+   (*g)->n=-1;  //Á¤Á¡ÀÇ °³¼ö -1·Î ÃÊ±âÈ­
    for(int i=0;i<VERTEX_SIZE;i++){
        (*g)->headnode_ptr[i]=NULL;
    }
 }
 
 void Insert_Vertex(graph* g){
-    if(g==NULL){
-        printf("Graph does not exist.\n");
-        return;
+    if(g==NULL){    //g°¡ NULLÀÌ¸é(±×·¡ÇÁ°¡ »ý¼ºµÈ »óÅÂ°¡ ¾Æ´Ï¸é)
+        printf("Graph does not exist.\n");  //¿¡·¯¹®±¸ Ãâ·Â
+        return;     //ÇÔ¼ö Á¾·á
     }
     
-    if (g->n + 1 == VERTEX_SIZE) {
-		printf("please input 0~9 number.\n");
-        return;
+    if (g->n + 1 == VERTEX_SIZE) {  //Á¤Á¡ÀÇ °³¼ö+1ÀÌ 10ÀÌ¸é
+		printf("please input 0~9 number.\n");   //¿¡·¯¹®±¸ Ãâ·Â
+        return;     //ÇÔ¼ö Á¾·á
 	}
-	g->n=g->n+1;
+	g->n=g->n+1;    //Á¤Á¡ÀÇ °³¼ö +1
 }
 void Insert_Edge(graph* g, int key1, int key2){
-    if(g==NULL){
-        printf("Graph does not exist.\n");
-        return;
+    if(g==NULL){    //g°¡ NULLÀÌ¸é(±×·¡ÇÁ°¡ »ý¼ºµÈ »óÅÂ°¡ ¾Æ´Ï¸é)
+        printf("Graph does not exist.\n");  //¿¡·¯¹®±¸ Ãâ·Â
+        return;     //ÇÔ¼ö Á¾·á
     }
 
-    if ((key1 > g->n) || (key2 > g->n)) {
-        printf("vertex does not exist.\n");
-		return;
+    if ((key1 > g->n) || (key2 > g->n)) {   //ÀÔ·Â¹ÞÀº Á¤Á¡ Áß ÇÑ°³¶óµµ Á¤Á¡ÀÇ ¼öº¸´Ù Å« °ªÀÌ¸é
+        printf("vertex does not exist.\n"); //¿¡·¯¹®±¸ Ãâ·Â
+		return; //ÇÔ¼ö Á¾·á
 	}
 
-    graphnode* v=(graphnode*)malloc(sizeof(graphnode));
+    graphnode* v=(graphnode*)malloc(sizeof(graphnode)); //Á¤Á¡ »ý¼º(µ¿Àû ¸Þ¸ð¸® ÇÒ´ç)
     v->key=key2;
     v->link=NULL;
-    graphnode* p=g->headnode_ptr[key1];
+    graphnode* p=g->headnode_ptr[key1]; //p¿¡ gÀÇ headnode_ptr[key1]¸¦ ÀúÀå
     graphnode* t;
-    if(g->headnode_ptr[key1]==NULL){
-        g->headnode_ptr[key1]=v;
-        return;
-    }else{
-        while(p){
-            t=p;
+    if(g->headnode_ptr[key1]==NULL){    //key1¿¡ °£¼±ÀÌ ¾ø´Ù¸é
+        g->headnode_ptr[key1]=v;    //key1¿¡ vÀúÀå
+        return;     //ÇÔ¼ö Á¾·á
+    }else{      //»ý¼ºµÈ °£¼±ÀÌ ÀÌ¹Ì ÀÖ´Ù¸é
+        while(p){   //p°¡ NULLÀÏ¶§±îÁö p ÀÌµ¿
+            t=p;    //p°¡ NULLÀÏ¶§ t´Â pÀÇ ÀÌÀü Á¤Á¡
             p=p->link;
         }
-        t->link=v;
+        t->link=v;  //tÀÇ ´ÙÀ½ Á¤Á¡¿¡ vÀúÀå
     }
 }
 
-/*void Depth_First_Search(graph* g, int key){
+/*void Depth_First_Search(graph* g, int key){       //Àç±Í È£Ãâ ¹æ¹ý(vertex ¹øÈ£°¡ ÀûÀº ¼ø¼­´ë·Î Å½»öÀÌ ¾ÈµÉ ¼ö ÀÖÀ½)
     graphnode* w;
     visitedNode[key]=1;
     printf("%d ",key);
@@ -166,50 +166,50 @@ void Insert_Edge(graph* g, int key1, int key2){
     }
 }*/
 void Depth_First_Search(graph* g, int key){
-    if(g==NULL){
-        printf("Graph does not exist.\n");
-        return;
+    if(g==NULL){    //g°¡ NULLÀÌ¸é(±×·¡ÇÁ°¡ »ý¼ºµÈ »óÅÂ°¡ ¾Æ´Ï¸é)
+        printf("Graph does not exist.\n");  //¿¡·¯¹®±¸ Ãâ·Â
+        return;     //ÇÔ¼ö Á¾·á
     }
-    if(key>g->n){
-        printf("vertex does not exist.\n");
-        return;
+    if(key>g->n){   //Å½»öÀ» ½ÃÀÛ ÇÒ key°¡ »ý¼ºµÈ Á¤Á¡ÀÇ °³¼öº¸´Ù Å¬ °æ¿ì
+        printf("vertex does not exist.\n"); //¿¡·¯¹®±¸ Ãâ·Â
+        return; //ÇÔ¼ö Á¾·á
     }
     graphnode* w;
     graphnode* p;
     int min_key;
     int n=0;
     top=-1;
-    push(key);
-    visitedNode[key]=1;
+    push(key);  //Ã³À½ key¸¦ push
+    visitedNode[key]=1; //¹æ¹® ±â·Ï
     printf("%d ", key);
 
-    while(!isEmpty_S()){
-        key=pop();
-        w=g->headnode_ptr[key];
-        p=g->headnode_ptr[key];
-        reset_non_visited();
+    while(!isEmpty_S()){    //½ºÅÃÀÌ ºñ¾îÀÖ´Ù¸é ¹Ýº¹¹® Á¾·á
+        key=pop();  //½ºÅÃ¿¡¼­ popÇÏ¿© key°ª¿¡ ÀúÀå
+        w=g->headnode_ptr[key]; //w´Â key¿¡ ¿¬°áµÈ Ã¹ Á¤Á¡
+        p=g->headnode_ptr[key]; //p´Â key¿¡ ¿¬°áµÈ Ã¹ Á¤Á¡
+        reset_non_visited();    //¹æ¹® ÇÏÁö ¾ÊÀº Á¤Á¡À» ÀúÀåÇÏ´Â ¹è¿­ ÃÊ±âÈ­
         n=0;
-        while(p){
-            if(!visitedNode[p->key]){
-                non_visited[n]=p->key;
+        while(p){   //p°¡ NULLÀÌ¸é ¹Ýº¹ Á¾·á
+            if(!visitedNode[p->key]){   //¹æ¹®ÇÏÁö ¾ÊÀº Á¤Á¡ÀÌ¸é
+                non_visited[n]=p->key;  //¹è¿­¿¡ key¸¦ ÀúÀå
                 n++;
             }
-            p=p->link;
+            p=p->link;  //p´Â ¿¬°áµÈ ´ÙÀ½ Á¤Á¡À» °¡¸®Å´
         }
-        if(n){
+        if(n){  //nÀÌ 1ÀÌ»óÀÌ¸é ¹æ¹®ÇÏÁö ¾ÊÀº Á¤Á¡ÀÌ Á¸ÀçÇÑ´Ù´Â ¶æ
             min_key=non_visited[0];
-            for(int i=0;i<n;i++){
+            for(int i=0;i<n;i++){   //¹æ¹®ÇÏÁö ¾ÊÀº Á¤Á¡µé Áß ÃÖ¼Ú°ªÀ» min_key¿¡ ÀúÀå
                 if(min_key>non_visited[i]){
                     min_key=non_visited[i];
                 }
             }
         }
 
-        if(!visitedNode[min_key]){
-                push(key);
-                push(min_key);
-                printf("%d ",min_key);
-                visitedNode[min_key]=1;
+        if(!visitedNode[min_key]){  //min_key¿¡ ÇØ´çÇÏ´Â Á¤Á¡¿¡ ¹æ¹®ÇÏÁö ¾Ê¾ÒÀ¸¸é
+                push(key);      //ÀÌÀü¿¡ popÇß´ø key¸¦ ´Ù½Ã push
+                push(min_key);  //ÀÎÁ¢ Á¤Á¡ Áß °¡Àå ÀÛÀº Á¤Á¡À» push
+                printf("%d ",min_key);  //Ãâ·Â
+                visitedNode[min_key]=1; //¹æ¹® ±â·Ï=1
                 key=min_key;
         }
     }
@@ -217,52 +217,52 @@ void Depth_First_Search(graph* g, int key){
 }
 
 void Breadth_First_Search(graph* g, int key) {
-    if(g==NULL){
-        printf("Graph does not exist.\n");
-        return;
+    if(g==NULL){    //g°¡ NULLÀÌ¸é(±×·¡ÇÁ°¡ »ý¼ºµÈ »óÅÂ°¡ ¾Æ´Ï¸é)
+        printf("Graph does not exist.\n");  //¿¡·¯¹®±¸ Ãâ·Â
+        return;     //ÇÔ¼ö Á¾·á
     }
-    if(key>g->n){
-        printf("vertex does not exist.\n");
-        return;
+    if(key>g->n){   //Å½»öÀ» ½ÃÀÛ ÇÒ key°¡ »ý¼ºµÈ Á¤Á¡ÀÇ °³¼öº¸´Ù Å¬ °æ¿ì
+        printf("vertex does not exist.\n"); //¿¡·¯¹®±¸ Ãâ·Â
+        return; //ÇÔ¼ö Á¾·á
     }
 	graphnode* w;
     int n=0;
     int min_key=0;
-	visitedNode[key] = 1;
+	visitedNode[key] = 1;   //¹æ¹® ±â·Ï = 1
     printf("%d ",key);
-	enqueue(key);
+	enqueue(key);   //Ã³À½ key¸¦ enqueue
 
-	while (!isEmpty_Q()) {
+	while (!isEmpty_Q()) {  //Å¥°¡ ºñ¾îÀÖ´Ù¸é ¹Ýº¹¹® Á¾·á
         n=0;
-		key = dequeue();
-        reset_non_visited();
+		key = dequeue();    //key¿¡ dequeueÇÑ °ªÀ» ÀúÀå
+        reset_non_visited();    //¹æ¹®ÇÏÁö ¾ÊÀº Á¤Á¡À» ÀúÀåÇÒ ¹è¿­ ÃÊ±âÈ­
 
 		for (w = g->headnode_ptr[key] ; w; w = w->link) {
-            if (!visitedNode[w->key]) {
+            if (!visitedNode[w->key]) { //w¿¡ ¿¬°áµÈ ¸ðµç Á¤Á¡Áß¿¡¼­ ¹æ¹®ÇÏÁö ¾ÊÀº Á¤Á¡À» ¹è¿­¿¡ ÀúÀå
                 non_visited[n++]=w->key;
 			}
         }
-        if(n) sortqueue(n);
-        for(int i=0;i<n;i++){
-            min_key=non_visited[i];
-		    visitedNode[min_key] = 1;
-            printf("%d ",min_key);
-            enqueue(min_key);
+        if(n) sortqueue(n); //¿À¸§Â÷¼øÀ¸·Î ¹è¿­ Á¤·Ä
+        for(int i=0;i<n;i++){   //¹æ¹® ÇÏÁö ¾ÊÀº Á¤Á¡ÀÇ °³¼ö¸¸Å­ ¹Ýº¹
+            min_key=non_visited[i]; //key°ªÀ» min_key¿¡ ÀúÀå
+		    visitedNode[min_key] = 1;   //¹æ¹® ±â·Ï
+            printf("%d ",min_key);  //Ãâ·Â
+            enqueue(min_key);   //enqueue
         }
     }
 }
 
 void Print_Graph(graph* g){
-    if(g==NULL){
-        printf("Graph does not exist.\n");
-        return;
+    if(g==NULL){    //g°¡ NULLÀÌ¸é(±×·¡ÇÁ°¡ »ý¼ºµÈ »óÅÂ°¡ ¾Æ´Ï¸é)
+        printf("Graph does not exist.\n");  //¿¡·¯¹®±¸ Ãâ·Â
+        return;     //ÇÔ¼ö Á¾·á
     }
     graphnode* p;
-    for(int i=0;i<=g->n;i++){
+    for(int i=0;i<=g->n;i++){   //»ý¼ºµÈ Á¤Á¡ÀÇ °³¼ö¸¸Å­ ¹Ýº¹
         p=g->headnode_ptr[i];
-        printf("graphlist[%d] : ",i);
+        printf("graphlist[%d] : ",i);   //Á¤Á¡ Ãâ·Â
         while(p){
-            printf("-> %d ", p->key);
+            printf("-> %d ", p->key);   //Á¤Á¡¿¡ ¿¬°áµÈ ÀÎÁ¢ Á¤Á¡ Ãâ·Â
             p=p->link;
         }
         printf("\n");
@@ -270,21 +270,21 @@ void Print_Graph(graph* g){
 }
 
 void Freenode(graph* g){
-    if(g==NULL){
-        printf("Graph does not exist.\n");
-        return;
+    if(g==NULL){    //g°¡ NULLÀÌ¸é(±×·¡ÇÁ°¡ »ý¼ºµÈ »óÅÂ°¡ ¾Æ´Ï¸é)
+        printf("Graph does not exist.\n");  //¿¡·¯¹®±¸ Ãâ·Â
+        return;     //ÇÔ¼ö Á¾·á
     }
     graphnode* p;
     graphnode* pre;
-    for(int i=0;i<=g->n;i++){
+    for(int i=0;i<=g->n;i++){   //»ý¼ºµÈ Á¤Á¡ÀÇ °³¼ö¸¸Å­ ¹Ýº¹
         p=g->headnode_ptr[i];
-        while(p){
+        while(p){       //Á¤Á¡iÀÇ ÀÎÁ¢ Á¤Á¡¿¡ ÇÒ´çµÈ ¸Þ¸ð¸® ÇØÁ¦
             pre=p;
             p=p->link;
             free(pre);
         }
     }
-    free(g);
+    free(g);    //±×·¡ÇÁ¿¡ ÇÒ´çµÈ ¸Þ¸ð¸® ÇØÁ¦
 }
 
 void reset_Visitedlist(){
@@ -331,7 +331,7 @@ int dequeue(){
     return queuenode[front];
 }
 
-void sortqueue(int n){
+void sortqueue(int n){  //¿À¸§ Â÷¼ø Á¤·Ä
     int min;
     int temp, index;
     for(int a=0;a<n;a++){
