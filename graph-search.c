@@ -206,7 +206,7 @@ void Depth_First_Search(graph* g, int key){
         }
 
         if(!visitedNode[min_key]){  //min_key에 해당하는 정점에 방문하지 않았으면
-                push(key);      //이전에 pop했던 key를 다시 push(인접 정점이 있기 )
+                push(key);      //이전에 pop했던 key를 다시 push(인접 정점이 있기 때문에)
                 push(min_key);  //인접 정점 중 가장 작은 정점을 push
                 printf("%d ",min_key);  //출력
                 visitedNode[min_key]=1; //방문 기록=1
