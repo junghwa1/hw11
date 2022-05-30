@@ -2,22 +2,22 @@
 #include <stdlib.h>
 #define VERTEX_SIZE 10
 
-typedef struct Node{
+typedef struct Node{    //정점 구조체
     struct Node* link;
     int key;
 }graphnode;
 
-typedef struct graph_p{
+typedef struct graph_p{ //정점의 개수와 정점을 저장할 수 있는 배열을 가진 구조체
     int n;
     struct Node* headnode_ptr[VERTEX_SIZE];
 }graph;
 
 
 
-int visitedNode[VERTEX_SIZE];
-int non_visited[VERTEX_SIZE];
-int stacknode[VERTEX_SIZE];
-int queuenode[VERTEX_SIZE];
+int visitedNode[VERTEX_SIZE];   //정점을 방문 했는지 기록하는 배열
+int non_visited[VERTEX_SIZE];   //방문하지 않은 정점을 저장 하는 배열
+int stacknode[VERTEX_SIZE];     //스택 배열
+int queuenode[VERTEX_SIZE];     //큐 배열
 int top=-1;
 int rear=-1;
 int front=-1;
@@ -116,13 +116,25 @@ void Initialize_Graph(graph** g){
 }
 
 void Insert_Vertex(graph* g){
+    if(g==NULL){
+        printf("Graph does not exist.\n");
+        return;
+    }
+    
     if (g->n + 1 == VERTEX_SIZE) {
-		return;
+		printf("please input 0~9 number.\n");
+        return;
 	}
 	g->n=g->n+1;
 }
 void Insert_Edge(graph* g, int key1, int key2){
+    if(g==NULL){
+        printf("Graph does not exist.\n");
+        return;
+    }
+
     if ((key1 > g->n) || (key2 > g->n)) {
+        printf("vertex does not exist.\n");
 		return;
 	}
 
@@ -154,6 +166,14 @@ void Insert_Edge(graph* g, int key1, int key2){
     }
 }*/
 void Depth_First_Search(graph* g, int key){
+    if(g==NULL){
+        printf("Graph does not exist.\n");
+        return;
+    }
+    if(key>g->n){
+        printf("vertex does not exist.\n");
+        return;
+    }
     graphnode* w;
     graphnode* p;
     int min_key;
@@ -197,6 +217,14 @@ void Depth_First_Search(graph* g, int key){
 }
 
 void Breadth_First_Search(graph* g, int key) {
+    if(g==NULL){
+        printf("Graph does not exist.\n");
+        return;
+    }
+    if(key>g->n){
+        printf("vertex does not exist.\n");
+        return;
+    }
 	graphnode* w;
     int n=0;
     int min_key=0;
@@ -225,6 +253,10 @@ void Breadth_First_Search(graph* g, int key) {
 }
 
 void Print_Graph(graph* g){
+    if(g==NULL){
+        printf("Graph does not exist.\n");
+        return;
+    }
     graphnode* p;
     for(int i=0;i<=g->n;i++){
         p=g->headnode_ptr[i];
@@ -238,6 +270,10 @@ void Print_Graph(graph* g){
 }
 
 void Freenode(graph* g){
+    if(g==NULL){
+        printf("Graph does not exist.\n");
+        return;
+    }
     graphnode* p;
     graphnode* pre;
     for(int i=0;i<=g->n;i++){
